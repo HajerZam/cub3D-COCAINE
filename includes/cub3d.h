@@ -74,7 +74,8 @@ typedef struct s_parser
 	int	in_map;
 	int	map_started;
 	int	map_ended;
-	int	line_no;
+	int	row;
+	int	col;
 }	t_parser;
 
 #endif

@@ -15,7 +15,6 @@ int	main(int ac, char **av)
 	t_scene	scene;
 	init_scene(&scene);
 	parse_config(av[1], &scene);
-	parse_map(av[1], &scene);
 	init_mlx(&scene);
 	return (0);
 }

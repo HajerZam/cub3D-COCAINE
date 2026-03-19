@@ -15,7 +15,8 @@ void    init_scene_parser(t_parser *parser)
     parser->in_map = 0;
     parser->map_started = 0;
     parser->map_ended = 0;
-    parser->line_no = 0;
+    parser->row = 0;
+    parser->col = 0;
 }
 
 void    init_scene_spawn(t_spawn *spawn)
