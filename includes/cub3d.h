@@ -33,9 +33,11 @@ typedef struct s_color
 
 typedef struct s_spawn
 {
-	int				row;
-	int				col;
-	enum e_cardinal	dir;	
+	int				x;
+	int				y;
+	enum e_cardinal	dir;
+	int				found;
+	char			direction;
 }	t_spawn;
 
 typedef struct s_map

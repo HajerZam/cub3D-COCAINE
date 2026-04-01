@@ -21,9 +21,11 @@ void    init_scene_parser(t_parser *parser)
 
 void    init_scene_spawn(t_spawn *spawn)
 {
-    spawn->row = -1;
-    spawn->col = -1;
+    spawn->x = -1;
+    spawn->y = -1;
     spawn->dir = -1;
+    spawn->found = 0;
+    spawn->direction = '\0';
 }
 
 void    init_scene(t_scene *scene)

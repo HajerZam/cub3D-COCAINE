@@ -45,4 +45,5 @@ void	parse_config(char *file_path, t_scene *scene)
     scene->map.grid[i] = NULL;
     scene->parser.col = ft_strlen((scene->map.grid[0]) - 1);
     close(fd);
+	map_validation(scene);
 }
