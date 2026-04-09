@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <stdarg.h>
 # include <stdint.h>
 
 # define HEX_UPC "0123456789ABCDEF"

@@ -63,14 +63,6 @@ typedef struct s_config
 	int		has_c;
 }	t_config;
 
-typedef struct s_scene
-{
-	t_config	config;
-	t_map		map;
-	t_spawn		spawn;
-	t_parser	parser;
-}	t_scene;
-
 typedef struct s_parser
 {
 	int	in_map;
@@ -79,5 +71,30 @@ typedef struct s_parser
 	int	row;
 	int	col;
 }	t_parser;
+
+typedef struct s_scene
+{
+	t_config	config;
+	t_map		map;
+	t_spawn		spawn;
+	t_parser	parser;
+}	t_scene;
+
+// init.c
+void	init_scene(t_scene *scene);
+void	init_mlx(t_scene *scene);
+
+// main.c
+void	error_exit(char *message);
+
+// parser/main_parse.c
+void	parse_config(char *file_path, t_scene *scene);
+
+// parser/parse_config.c
+void	parse_identifier(char *line, t_scene *scene);
+void	validate_config(t_scene *scene);
+
+// parser/map_validation.c
+void	map_validation(t_scene *scene);
 
 #endif

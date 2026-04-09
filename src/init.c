@@ -50,3 +50,8 @@ void    init_scene(t_scene *scene)
 
 
 
+
+void	init_mlx(t_scene *scene)
+{
+	(void)scene;
+}
