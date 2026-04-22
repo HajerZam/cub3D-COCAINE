@@ -80,9 +80,48 @@ typedef struct s_scene
 	t_parser	parser;
 }	t_scene;
 
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	dir_x;
+	float	dir_y;
+	float	plane_x;
+	float	plane_y;
+}	t_player;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	t_img	img;
+}	t_mlx;
+
+typedef struct s_game
+{
+	t_scene		scene;
+	t_player	player;
+	t_mlx		mlx;
+	t_img		textures[4];
+}	t_game;
+
+// freeall.c
+void	free_scene(t_scene *scene);
+
 // init.c
 void	init_scene(t_scene *scene);
-void	init_mlx(t_scene *scene);
+void	init_mlx(t_game *game);
 
 // main.c
 void	error_exit(char *message);

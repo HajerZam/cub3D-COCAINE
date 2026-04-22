@@ -4,6 +4,7 @@ CFLAGS	= -Wall -Wextra -Werror
 
 SRCS	= src/main.c \
 		  src/init.c \
+		  src/freeall.c \
 		  src/parser/main_parse.c \
 		  src/parser/parse_config.c \
 		  src/parser/map_validation.c

@@ -48,10 +48,7 @@ void    init_scene(t_scene *scene)
     init_scene_config(&scene->config);
 }
 
-
-
-
-void	init_mlx(t_scene *scene)
+void	init_mlx(t_game *game)
 {
-	(void)scene;
+	(void)game;
 }
