@@ -12,9 +12,6 @@
 
 #include "cub3d.h"
 
-#define SCREEN_W	1280
-#define SCREEN_H	720
-
 /*short cut to zero out alllll fields of the struct scene lol*/
 
 void	init_scene(t_scene *scene)

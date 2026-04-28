@@ -12,10 +12,6 @@
 
 #include "cub3d.h"
 
-// macros
-#define SCREEN_W	1280
-#define SCREEN_H	720
-
 /*	in it's simplest view_x is a value in [-1, 1]
 	-1 = leftmost column, 0 = center, +1 = rightmost column
 	the ray direction is: player position + view_x * view plane vector
@@ -122,7 +118,7 @@ static void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx)
 		ray->tex_x = game->textures[tex_idx].width - ray->tex_x - 1;
 }
 
-static int	get_texel_color(t_img *tex, int tex_x, int tex_y)
+int	get_texel_color(t_img *tex, int tex_x, int tex_y)
 {
 	char	*pixel;
 

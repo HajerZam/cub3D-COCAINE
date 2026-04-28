@@ -3,6 +3,10 @@
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
+# include <math.h>
+
+# define SCREEN_W	1280
+# define SCREEN_H	720
 
 // macros
 # define SCREEN_W	1280
@@ -179,11 +183,13 @@ void	map_validation(t_scene *scene);
 void	calc_wall_height(t_ray *ray);
 int		select_texture(t_ray *ray);
 void    draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx);
+int     get_texel_color(t_img *tex, int tex_x, int tex_y);
 void	render_frame(t_game *game);
 
 /* player*/
 void	init_player(t_game *game);
 int		key_hook(int keycode, t_game *game);
+int		mouse_hook(int x, int y, t_game *game);
 int		close_hook(t_game *game);
 
 /*2d engine*/
@@ -191,6 +197,6 @@ void	draw_minimap(t_game *game);
 void	put_pixel_safe(t_img *img, int x, int y, int color);
 
 /*initialization*/
-void	mlx_pixel_to_image(t_img *img, int x, int y, int color);
+void	mlx_pixel_put_to_image(t_img *img, int x, int y, int color);
 
 #endif
