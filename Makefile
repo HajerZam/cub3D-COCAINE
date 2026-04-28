@@ -7,7 +7,7 @@ SRCS	= src/main.c \
 		  src/freeall.c \
 		  src/parser/main_parse.c \
 		  src/parser/parse_config.c \
-		  src/parser/map_validation.c
+		  src/parser/map_validation.c 
 
 OBJ_DIR	= obj
 OBJS	= $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))

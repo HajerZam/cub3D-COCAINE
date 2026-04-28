@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/28 15:48:05 by halzamma          #+#    #+#             */
+/*   Updated: 2026/04/28 15:48:08 by halzamma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	error_exit(char *message)
@@ -16,7 +28,6 @@ static int game_loop(t_game *game)
 int	main(int ac, char **av)
 {
 	t_game	game;
-	int		i;
 
 	if (ac != 2)
 		error_exit("Only 2 arguments are needed");

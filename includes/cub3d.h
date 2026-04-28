@@ -4,6 +4,10 @@
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
+// macros
+# define SCREEN_W	1280
+# define SCREEN_H	720
+
 enum e_keys
 {
 	KEY_W = 119,
@@ -180,7 +184,6 @@ void	render_frame(t_game *game);
 /* player*/
 void	init_player(t_game *game);
 int		key_hook(int keycode, t_game *game);
-int		mlx_hook(game->mlx.win, 6, 0, mouse_hook, game);
 int		close_hook(t_game *game);
 
 /*2d engine*/

@@ -27,9 +27,10 @@ static void	rotate_by_angle(t_player *p, double angle)
 
 int	mouse_hook(int x, int y, t_game *game)
 {
-	static int	last_x = SCREEN_W / 2;
+	static int	last_x;
 	int			delta_x;
 
+	last_x = SCREEN_W / 2;
 	(void)y;
 	delta_x = x - last_x;
 	last_x = x;
