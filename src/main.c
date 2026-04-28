@@ -16,7 +16,7 @@ static int game_loop(t_game *game)
 int	main(int ac, char **av)
 {
 	t_game	game;
-	int		i;
+	//int		i ;
 
 	if (ac != 2)
 		error_exit("Only 2 arguments are needed");

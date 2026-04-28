@@ -1,12 +1,19 @@
-NO ./textures/north.xpm
-SO ./textures/south.xpm
-WE ./textures/west.xpm
-EA ./textures/east.xpm
-F 220,100,0
-C 225,30,0
+NO ./textures/placeholder.xpm
+SO ./textures/placeholder1.xpm
+WE ./textures/placeholder2.xpm
+EA ./textures/placeholder3.xpm
+F 255,0,0
+C 100,30,255
 
 111111
 100001
-10N001
+10E001
+100001
+100001
+100001
+100001
+100001
+100001
+100001
 100001
 111111

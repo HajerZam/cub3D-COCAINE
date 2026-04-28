@@ -1,44 +1,73 @@
-NAME	= cub3d
-CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+# **************************************************************************** #
+#                                CUB3D MAKEFILE                                #
+# **************************************************************************** #
 
-SRCS	= src/main.c \
-		  src/init.c \
-		  src/freeall.c \
-		  src/parser/main_parse.c \
-		  src/parser/parse_config.c \
-		  src/parser/map_validation.c
+NAME        := cub3d
+CC          := cc
+CFLAGS      := -Wall -Wextra -Werror -g
+RM          := rm -rf
 
-OBJ_DIR	= obj
-OBJS	= $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
+# Valgrind rules
+VALGRIND       = valgrind
+VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes
 
-LIBFT	= libft/libft.a
-MLX		= minilibx-linux/libmlx.a
-MLX_FLAGS = -Lminilibx-linux -lmlx -lX11 -lXext -lm
+valgrind: $(NAME)
+	$(VALGRIND) $(VALGRIND_FLAGS) ./$(NAME) maps/test.cub
 
-all: $(NAME)
+valgrind-full: $(NAME)
+	$(VALGRIND) $(VALGRIND_FLAGS) ./$(NAME) maps/test.cub
+
+SRC_DIRS    := src src/parser src/3d_engine src/2d_engine src/player
+OBJ_DIR     := obj
+LIBFT_DIR   := libft
+MLX_DIR     := minilibx-linux
+INCLUDE_DIR := includes
+
+LIBFT       := $(LIBFT_DIR)/libft.a
+MLX         := $(MLX_DIR)/libmlx.a
+HEADERS     := -I$(INCLUDE_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+MLX_FLAGS   := -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
+
+SRC         := $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c))
+OBJ         := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
+SRC_TO_OBJ_MAP = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+
+all: $(OBJ_DIR) $(LIBFT) $(MLX) $(NAME)
+
+$(NAME): $(SRC_TO_OBJ_MAP) $(LIBFT) $(MLX)
+	@echo "Linking $(NAME)..."
+	@$(CC) $(CFLAGS) $(SRC_TO_OBJ_MAP) -L$(LIBFT_DIR) -lft $(MLX_FLAGS) -o $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $@
+
+define MAKE_OBJ_RULE
+$(OBJ_DIR)/$(notdir $(1:.c=.o)): $(1) | $(OBJ_DIR)
+	@echo "Compiling $(1)..."
+	@$(CC) $(CFLAGS) $(HEADERS) -c $$< -o $$@
+endef
+
+$(foreach src, $(SRC), $(eval $(call MAKE_OBJ_RULE,$(src))))
 
 $(LIBFT):
-	$(MAKE) -C libft
+	@echo "Building libft..."
+	@$(MAKE) -s -C $(LIBFT_DIR)
 
 $(MLX):
-	$(MAKE) -C minilibx-linux
-
-$(NAME): $(LIBFT) $(MLX) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
-
-$(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I includes -I libft -I minilibx-linux -c $< -o $@
+	@echo "Building minilibx..."
+	@$(MAKE) -s -C $(MLX_DIR)
 
 clean:
-	$(MAKE) -C libft clean
-	$(MAKE) -C minilibx-linux clean
-	rm -rf $(OBJ_DIR)
+	@echo "Cleaning cub3d objects..."
+	@$(RM) $(OBJ_DIR)
+	@$(MAKE) -s -C $(LIBFT_DIR) clean
+	@$(MAKE) -s -C $(MLX_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "Removing $(NAME)..."
+	@$(RM) $(NAME)
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind valgrind-full
