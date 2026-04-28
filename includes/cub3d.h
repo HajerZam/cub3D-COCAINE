@@ -128,7 +128,7 @@ typedef struct s_ray
 	double	side_dist_y;
 	double	delta_dist_x;
 	double	delta_dist_y;
-	double	prep_wall_dist;
+	double	perp_wall_dist;
 	int		step_x;
 	int		step_y;
 	int		side;
@@ -172,12 +172,15 @@ void	validate_config(t_scene *scene);
 void	map_validation(t_scene *scene);
 
 /* raycasting and rendering */
+void	calc_wall_height(t_ray *ray);
+int		select_texture(t_ray *ray);
 void    draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx);
 void	render_frame(t_game *game);
 
 /* player*/
 void	init_player(t_game *game);
 int		key_hook(int keycode, t_game *game);
+int		mlx_hook(game->mlx.win, 6, 0, mouse_hook, game);
 int		close_hook(t_game *game);
 
 /*2d engine*/

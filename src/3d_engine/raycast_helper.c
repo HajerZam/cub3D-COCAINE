@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#define "cub3d.h"
+#include "cub3d.h"
 
 static void	init_draw(t_game *game, t_ray *ray, t_draw *d, int tex_idx)
 {
@@ -62,8 +62,32 @@ static void	render_column(t_game *game, t_ray *ray, int x, t_draw *d)
 
 void    draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx)
 {
-    t_draw	d;
+	t_draw	d;
 
 	init_draw(game, ray, &d, tex_idx);
 	render_column(game, ray, x, &d);
+}
+
+void	calc_wall_height(t_ray *ray)
+{
+	ray->line_height = (int)(SCREEN_H / ray->perp_wall_dist);
+	ray->draw_start = SCREEN_H / 2 - ray->line_height / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = SCREEN_H / 2 + ray->line_height / 2;
+	if (ray->draw_end >= SCREEN_H)
+		ray->draw_end = SCREEN_H - 1;
+}
+
+int	select_texture(t_ray *ray)
+{
+	if (ray->side == 0)
+	{
+		if (ray->step_x > 0)
+			return (WEST);
+		return (EAST);
+	}
+	if (ray->step_y > 0)
+		return (NORTH);
+	return (SOUTH);
 }

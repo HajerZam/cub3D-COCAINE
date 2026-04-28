@@ -152,9 +152,9 @@ void    render_frame(t_game *game)
 		perform_dda(game, &ray);
 		calc_wall_dist(&ray);
 		calc_wall_height(&ray);
-		tex_idx = select_texture(&ray);
-		calc_tex_x(game, &ray, tex_idx);
-		draw_wall_column(game, &ray, x, tex_idx);
+		tex_index = select_texture(&ray);
+		calc_tex_x(game, &ray, tex_index);
+		draw_wall_column(game, &ray, x, tex_index);
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win,
