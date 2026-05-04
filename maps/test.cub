@@ -2,8 +2,8 @@ NO ./textures/placeholder.xpm
 SO ./textures/placeholder1.xpm
 WE ./textures/placeholder2.xpm
 EA ./textures/placeholder3.xpm
-F 255,0,0
-C 100,30,255
+F 122,84,161
+C 79,46,101
 
 111111
 100001
