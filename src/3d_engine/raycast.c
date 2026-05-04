@@ -120,7 +120,7 @@ static void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx)
 
 int	get_texel_color(t_img *tex, int tex_x, int tex_y)
 {
-	char	*pixel;
+	char	*pixel; 
 
 	if (tex_x < 0)
 		tex_x = 0;

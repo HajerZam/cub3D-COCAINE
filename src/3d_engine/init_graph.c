@@ -34,6 +34,13 @@ static void	load_texture(void *mlx_ptr, t_img *tex, char *path)
 			&tex->line_len, &tex->endian);
 }
 
+static void	mlx_hooks(t_game *game)
+{
+	mlx_hook(game->mlx.win, 2, 1L << 0, key_press, game);
+	mlx_hook(game->mlx.win, 3, 1L << 1, key_release, game);
+	mlx_hook(game->mlx.win, 17, 0L, close_hook, game);
+}
+
 /* we start off with creating the mlx connection then we opens a window.
 after that make the off-screen image buffer we will render into Loads the four wall textures (NORTH, SOUTH, WEST, EAST).
 lastly Hooking keyboard and window-close 
@@ -68,10 +75,8 @@ void	init_mlx(t_game *game)
 	load_texture(game->mlx.mlx, &game->textures[EAST],
 		game->scene.config.ea_path);
  
-	/* Event hooks */
-	mlx_key_hook(game->mlx.win, key_hook, game);
-    mlx_hook(game->mlx.win, 6, 0, mouse_hook, game);
-	mlx_hook(game->mlx.win, 17, 0, close_hook, game);  /* window close */
+	/* Event hooks: key press, key release, mouse, window close */
+	mlx_hooks(game);
 }
 
 /*Helper to write a color into the image buffer at (x, y)*/

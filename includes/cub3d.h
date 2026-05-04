@@ -18,8 +18,8 @@ enum e_keys
 	KEY_A = 97,
 	KEY_S = 115,
 	KEY_D = 100,
-	KEY_LEFT = 65361,
-	KEY_RIGHT = 65363,
+	KEY_LEFT = 65363,
+	KEY_RIGHT = 65361,
 	KEY_ESC = 65307
 };
 
@@ -98,6 +98,16 @@ typedef struct s_player
 	float	plane_y;
 }	t_player;
 
+typedef struct s_keys
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	left;
+	int	right;
+}	t_keys;
+
 typedef struct s_img
 {
 	void	*img;
@@ -120,6 +130,7 @@ typedef struct s_game
 {
 	t_scene		scene;
 	t_player	player;
+	t_keys		keys;
 	t_mlx		mlx;
 	t_img		textures[4];
 }	t_game;
@@ -161,6 +172,7 @@ typedef struct s_draw
 
 // freeall.c
 void	free_scene(t_scene *scene);
+void	free_game(t_game *game);
 
 // init.c
 void	init_scene(t_scene *scene);
@@ -188,7 +200,9 @@ void	render_frame(t_game *game);
 
 /* player*/
 void	init_player(t_game *game);
-int		key_hook(int keycode, t_game *game);
+void	update_player(t_game *game);
+int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
 int		mouse_hook(int x, int y, t_game *game);
 int		close_hook(t_game *game);
 

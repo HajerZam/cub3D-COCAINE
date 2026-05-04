@@ -20,15 +20,15 @@ void	error_exit(char *message)
 
 static int game_loop(t_game *game)
 {
+	update_player(game);
 	render_frame(game);
-	//add bonus
+	draw_minimap(game);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	t_game	game;
-	int		i;
 
 	if (ac != 2)
 		error_exit("Only 2 arguments are needed");
