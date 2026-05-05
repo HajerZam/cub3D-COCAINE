@@ -2,7 +2,8 @@ NO ./textures/placeholder.xpm
 SO ./textures/placeholder1.xpm
 WE ./textures/placeholder2.xpm
 EA ./textures/placeholder3.xpm
-DO ./textures/dplaceholder.xpm
+DC ./textures/dplaceholder.xpm
+DO ./textures/oplaceholder.xpm
 F 0,0,0
 C 255,255,50
 

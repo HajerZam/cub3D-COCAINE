@@ -19,7 +19,7 @@ void    trigger_interact(t_game *game)
 
     interact_x = game->player.x + game->player.dir_x * 0.5;
     interact_y = game->player.y + game->player.dir_y * 0.5;
-    if (is_wall(game, interact_x, interact_y) == 'D')
+    if (is_wall(game, interact_x, interact_y))
     {
         int mx = (int)interact_x;
         int my = (int)interact_y;

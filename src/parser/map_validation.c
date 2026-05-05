@@ -60,7 +60,7 @@ static void	flood_fill(char **grid, int x, int y, int w, int h)
 		error_exit("Map is not closed (out of bounds)");
 	if (grid[y][x] == ' ')
 		error_exit("Map is not closed (reachable space)");
-	if (grid[y][x] == '1' || grid[y][x] == 'V')
+	if (grid[y][x] == '1' || grid[y][x] == 'D' || grid[y][x] == 'V')
 		return ;
 	grid[y][x] = 'V';
 	flood_fill(grid, x + 1, y, w, h);
@@ -120,7 +120,7 @@ void	map_validation(t_scene *scene)
 			if (scene->map.grid[i][j] != '1' && scene->map.grid[i][j] != '0'
 				&& scene->map.grid[i][j] != 'N' && scene->map.grid[i][j] != 'S'
 				&& scene->map.grid[i][j] != 'E' && scene->map.grid[i][j] != 'W'
-				&& scene->map.grid[i][j] != 'D')
+				&& scene->map.grid[i][j] != 'D' && scene->map.grid[i][j] != 'O')
 				error_exit("Invalid character in map");
 			add_char(scene, scene->map.grid[i][j], j, i);
 		}

@@ -30,7 +30,8 @@ enum e_cardinal
 	SOUTH,
 	WEST,
 	EAST,
-	DOOR
+	DOOR,
+	DOOR_OPEN
 };
 
 typedef struct s_color
@@ -64,6 +65,7 @@ typedef struct s_config
 	char	*we_path;
 	char	*ea_path;
 	char	*do_path;
+	char	*dop_path;
 	t_color	floor;
 	t_color	ceiling;
 	int		has_no;
@@ -71,6 +73,7 @@ typedef struct s_config
 	int		has_we;
 	int		has_ea;
 	int		has_do;
+	int		has_dop;
 	int		has_f;
 	int		has_c;
 }	t_config;
@@ -137,7 +140,7 @@ typedef struct s_game
 	t_player	player;
 	t_keys		keys;
 	t_mlx		mlx;
-	t_img		textures[5]; // 4 walls + door
+	t_img		textures[6]; // 4 walls + door + door_open
 }	t_game;
 
 // raycasting structures
@@ -200,6 +203,9 @@ void	map_validation(t_scene *scene);
 void	calc_wall_height(t_ray *ray);
 int		select_texture(t_ray *ray, t_game *game);
 void    draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx);
+
+/* parser/parse_config.c - validation */
+void	validate_config(t_scene *scene);
 int     get_texel_color(t_img *tex, int tex_x, int tex_y);
 void	render_frame(t_game *game);
 

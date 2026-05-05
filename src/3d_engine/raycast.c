@@ -20,7 +20,7 @@
 
 static void	init_ray(t_game *game, int x, t_ray *ray)
 {
-	double view_x;
+	double	view_x;
 
 	view_x = 2.0 * x / (double)SCREEN_W - 1.0;
 	ray->dir_x = game->player.dir_x + game->player.plane_x * view_x;
@@ -28,7 +28,7 @@ static void	init_ray(t_game *game, int x, t_ray *ray)
 	/* Current map cell player is in */
 	ray->map_x = (int)game->player.x;
 	ray->map_y = (int)game->player.y;
-	/*	delta_distis is how far the ray travels (in world units) to cross 
+	/*	delta_distis is how far the ray travels (in world units) to cross
 		one full grid cell, horizontally and vertically
 		If dir == 0 the ray is perfectly axis-aligned */
 	if (ray->dir_x == 0)
@@ -41,7 +41,8 @@ static void	init_ray(t_game *game, int x, t_ray *ray)
 		ray->delta_dist_y = fabs(1.0 / ray->dir_y);
 }
 
-/*	DDA setup, aka Digital Differential Analyzer basically a line drawing algorithm used in computer graphics
+/*	DDA setup,
+		aka Digital Differential Analyzer basically a line drawing algorithm used in computer graphics
 	to generate a line segment between two specified endpoints*/
 
 static void	setup_dda(t_game *game, t_ray *ray)
@@ -54,7 +55,8 @@ static void	setup_dda(t_game *game, t_ray *ray)
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - game->player.x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - game->player.x)
+			* ray->delta_dist_x;
 	}
 	if (ray->dir_y < 0)
 	{
@@ -64,7 +66,8 @@ static void	setup_dda(t_game *game, t_ray *ray)
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - game->player.y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - game->player.y)
+			* ray->delta_dist_y;
 	}
 }
 
@@ -73,7 +76,7 @@ static void	setup_dda(t_game *game, t_ray *ray)
 static void	perform_dda(t_game *game, t_ray *ray)
 {
 	int	hit;
- 
+
 	hit = 0;
 	while (!hit)
 	{
@@ -90,7 +93,8 @@ static void	perform_dda(t_game *game, t_ray *ray)
 			ray->side = 1;
 		}
 		if (game->scene.map.grid[ray->map_y][ray->map_x] == '1'
-			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'D')
+			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'D'
+			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'O')
 			hit = 1;
 	}
 }
@@ -106,7 +110,7 @@ static void	calc_wall_dist(t_ray *ray)
 static void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx)
 {
 	double	wall_x;
- 
+
 	if (ray->side == 0)
 		wall_x = game->player.y + ray->perp_wall_dist * ray->dir_y;
 	else
@@ -121,7 +125,7 @@ static void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx)
 
 int	get_texel_color(t_img *tex, int tex_x, int tex_y)
 {
-	char	*pixel; 
+	char	*pixel;
 
 	if (tex_x < 0)
 		tex_x = 0;
@@ -135,11 +139,11 @@ int	get_texel_color(t_img *tex, int tex_x, int tex_y)
 	return (*(int *)pixel);
 }
 
-void    render_frame(t_game *game)
+void	render_frame(t_game *game)
 {
-	t_ray   ray;
-	int     tex_index;
-	int     x;
+	t_ray ray;
+	int tex_index;
+	int x;
 
 	x = 0;
 	while (x < SCREEN_W)
@@ -154,6 +158,6 @@ void    render_frame(t_game *game)
 		draw_wall_column(game, &ray, x, tex_index);
 		x++;
 	}
-	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win,
-		game->mlx.img.img, 0, 0);
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img.img, 0,
+		0);
 }

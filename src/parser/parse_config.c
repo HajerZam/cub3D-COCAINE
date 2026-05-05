@@ -72,12 +72,19 @@ void	parse_identifier(char *line, t_scene *scene)
 		scene->config.ea_path = dup_strip(skip_spaces(line + 3));
 		scene->config.has_ea = 1;
 	}
-	else if (ft_strncmp(line, "DO ", 3) == 0)
+	else if (ft_strncmp(line, "DC ", 3) == 0)
 	{
 		if (scene->config.has_do)
-			error_exit("Duplicate DO identifier");
+			error_exit("Duplicate DC identifier");
 		scene->config.do_path = dup_strip(skip_spaces(line + 3));
 		scene->config.has_do = 1;
+	}
+	else if (ft_strncmp(line, "DO ", 3) == 0)
+	{
+		if (scene->config.has_dop)
+			error_exit("Duplicate DO identifier");
+		scene->config.dop_path = dup_strip(skip_spaces(line + 3));
+		scene->config.has_dop = 1;
 	}
 	else if (ft_strncmp(line, "F ", 2) == 0)
 	{
@@ -111,7 +118,9 @@ void	validate_config(t_scene *scene)
 	if (!scene->config.has_ea)
 		error_exit("Missing EA texture");
 	if (!scene->config.has_do)
-		error_exit("Missing DO texture");
+		error_exit("Missing DC (closed door) texture");
+	if (!scene->config.has_dop)
+		error_exit("Missing DO (open door) texture");
 	if (!scene->config.has_f)
 		error_exit("Missing F (floor) color");
 	if (!scene->config.has_c)

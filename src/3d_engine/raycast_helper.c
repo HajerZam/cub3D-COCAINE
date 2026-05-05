@@ -83,6 +83,8 @@ int	select_texture(t_ray *ray, t_game *game)
 {
 	if (game->scene.map.grid[ray->map_y][ray->map_x] == 'D')
 		return (DOOR);
+	if (game->scene.map.grid[ray->map_y][ray->map_x] == 'O')
+		return (DOOR_OPEN);
 	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
