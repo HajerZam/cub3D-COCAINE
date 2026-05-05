@@ -84,8 +84,8 @@ static void	check_flood(t_scene *scene)
 	char	**copy;
 
 	copy = copy_grid(scene);
-	flood_fill(copy, scene->spawn.x, scene->spawn.y,
-		scene->map.width, scene->map.height);
+	flood_fill(copy, scene->spawn.x, scene->spawn.y, scene->map.width,
+		scene->map.height);
 	free_grid(copy);
 }
 
@@ -119,7 +119,8 @@ void	map_validation(t_scene *scene)
 				continue ;
 			if (scene->map.grid[i][j] != '1' && scene->map.grid[i][j] != '0'
 				&& scene->map.grid[i][j] != 'N' && scene->map.grid[i][j] != 'S'
-				&& scene->map.grid[i][j] != 'E' && scene->map.grid[i][j] != 'W')
+				&& scene->map.grid[i][j] != 'E' && scene->map.grid[i][j] != 'W'
+				&& scene->map.grid[i][j] != 'D')
 				error_exit("Invalid character in map");
 			add_char(scene, scene->map.grid[i][j], j, i);
 		}

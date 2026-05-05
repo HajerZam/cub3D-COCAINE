@@ -74,6 +74,8 @@ void	init_mlx(t_game *game)
 		game->scene.config.we_path);
 	load_texture(game->mlx.mlx, &game->textures[EAST],
 		game->scene.config.ea_path);
+	load_texture(game->mlx.mlx, &game->textures[DOOR],
+		game->scene.config.do_path);
  
 	/* Event hooks: key press, key release, mouse, window close */
 	mlx_hooks(game);

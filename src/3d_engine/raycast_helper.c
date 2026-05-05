@@ -79,8 +79,10 @@ void	calc_wall_height(t_ray *ray)
 		ray->draw_end = SCREEN_H - 1;
 }
 
-int	select_texture(t_ray *ray)
+int	select_texture(t_ray *ray, t_game *game)
 {
+	if (game->scene.map.grid[ray->map_y][ray->map_x] == 'D')
+		return (DOOR);
 	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)

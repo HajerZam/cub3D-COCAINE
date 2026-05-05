@@ -89,7 +89,8 @@ static void	perform_dda(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->scene.map.grid[ray->map_y][ray->map_x] == '1')
+		if (game->scene.map.grid[ray->map_y][ray->map_x] == '1'
+			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'D')
 			hit = 1;
 	}
 }
@@ -148,7 +149,7 @@ void    render_frame(t_game *game)
 		perform_dda(game, &ray);
 		calc_wall_dist(&ray);
 		calc_wall_height(&ray);
-		tex_index = select_texture(&ray);
+		tex_index = select_texture(&ray, game);
 		calc_tex_x(game, &ray, tex_index);
 		draw_wall_column(game, &ray, x, tex_index);
 		x++;

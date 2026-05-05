@@ -12,8 +12,8 @@
 
 #include "cub3d.h"
 
-#define MOVE_SPEED	0.05
-#define ROT_SPEED	0.03
+#define MOVE_SPEED 0.05
+#define ROT_SPEED 0.03
 
 void	init_player(t_game *game)
 {
@@ -52,7 +52,7 @@ void	init_player(t_game *game)
 	}
 }
 
-static int	is_wall(t_game *game, double x, double y)
+int	is_wall(t_game *game, double x, double y)
 {
 	int	mx;
 	int	my;
@@ -63,7 +63,8 @@ static int	is_wall(t_game *game, double x, double y)
 		return (1);
 	if (mx < 0 || mx >= game->scene.map.width)
 		return (1);
-	return (game->scene.map.grid[my][mx] == '1');
+	return (game->scene.map.grid[my][mx] == '1'
+		|| game->scene.map.grid[my][mx] == 'D');
 }
 
 static void	move_player(t_game *game)
@@ -154,6 +155,8 @@ int	key_press(int keycode, t_game *game)
 		game->keys.left = 1;
 	if (keycode == KEY_RIGHT)
 		game->keys.right = 1;
+	if (keycode == KEY_E)
+		trigger_interact(game);
 	return (0);
 }
 
