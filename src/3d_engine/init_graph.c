@@ -36,6 +36,7 @@ static void	load_texture(void *mlx_ptr, t_img *tex, char *path)
 
 static void	mlx_hooks(t_game *game)
 {
+	mlx_hook(game->mlx.win, 6, 1L << 6, mouse_hook, game);
 	mlx_hook(game->mlx.win, 2, 1L << 0, key_press, game);
 	mlx_hook(game->mlx.win, 3, 1L << 1, key_release, game);
 	mlx_hook(game->mlx.win, 17, 0L, close_hook, game);

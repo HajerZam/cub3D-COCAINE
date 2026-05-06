@@ -27,16 +27,13 @@ static void	rotate_by_angle(t_player *p, double angle)
 
 int	mouse_hook(int x, int y, t_game *game)
 {
-	static int	last_x;
 	int			delta_x;
 
-	last_x = SCREEN_W / 2;
 	(void)y;
-	delta_x = x - last_x;
-	last_x = x;
+	delta_x = x - SCREEN_W / 2;
 	if (delta_x == 0)
 		return (0);
-	rotate_by_angle(&game->player, delta_x * 0.002);
-	render_frame(game);
+	rotate_by_angle(&game->player, delta_x * -0.002);
+	mlx_mouse_move(game->mlx.mlx, game->mlx.win, SCREEN_W / 2, SCREEN_H / 2);
 	return (0);
 }
