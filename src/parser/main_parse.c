@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_parse.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/07 15:54:25 by halzamma          #+#    #+#             */
+/*   Updated: 2026/05/07 15:55:02 by halzamma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-// Returns 1 if the line is a map line (only valid map chars)
 static int	is_map_line(char *line)
 {
 	int	i;
@@ -16,7 +27,6 @@ static int	is_map_line(char *line)
 	return (i > 0);
 }
 
-// Adds one row to map.grid, growing the array
 static void	add_map_row(t_scene *scene, char *line)
 {
 	char	**new_grid;

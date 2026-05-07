@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 15:48:05 by halzamma          #+#    #+#             */
-/*   Updated: 2026/04/28 17:23:12 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:40:03 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	error_exit(char *message)
 	exit(1);
 }
 
-static int game_loop(t_game *game)
+static int	game_loop(t_game *game)
 {
 	update_player(game);
 	render_frame(game);
@@ -37,14 +37,6 @@ int	main(int ac, char **av)
 	ft_memset(&game, 0, sizeof(t_game));
 	init_scene(&game.scene);
 	parse_config(av[1], &game.scene);
-	/* DEBUG START - remove before final submission
-	i = 0;
-	printf("Map [%d x %d] | Spawn: (%d,%d) dir:%c\n",
-		game.scene.map.width, game.scene.map.height,
-		game.scene.spawn.x, game.scene.spawn.y, game.scene.spawn.direction);
-	while (i < game.scene.map.height)
-		printf("%s\n", game.scene.map.grid[i++]);
-	*/
 	init_mlx(&game);
 	init_player(&game);
 	mlx_loop_hook(game.mlx.mlx, game_loop, &game);

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 10:58:49 by halzamma          #+#    #+#             */
-/*   Updated: 2026/04/23 10:58:49 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:53:19 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*	in it's simplest view_x is a value in [-1, 1]
-	-1 = leftmost column, 0 = center, +1 = rightmost column
-	the ray direction is: player position + view_x * view plane vector
-	the view plane is perpendicular to the direction and its length controls FOV
-*/
 
 static void	init_ray(t_game *game, int x, t_ray *ray)
 {
@@ -25,12 +19,8 @@ static void	init_ray(t_game *game, int x, t_ray *ray)
 	view_x = 2.0 * x / (double)SCREEN_W - 1.0;
 	ray->dir_x = game->player.dir_x + game->player.plane_x * view_x;
 	ray->dir_y = game->player.dir_y + game->player.plane_y * view_x;
-	/* Current map cell player is in */
 	ray->map_x = (int)game->player.x;
 	ray->map_y = (int)game->player.y;
-	/*	delta_distis is how far the ray travels (in world units) to cross
-		one full grid cell, horizontally and vertically
-		If dir == 0 the ray is perfectly axis-aligned */
 	if (ray->dir_x == 0)
 		ray->delta_dist_x = 1e30;
 	else
@@ -40,10 +30,6 @@ static void	init_ray(t_game *game, int x, t_ray *ray)
 	else
 		ray->delta_dist_y = fabs(1.0 / ray->dir_y);
 }
-
-/*	DDA setup,
-		aka Digital Differential Analyzer basically a line drawing algorithm used in computer graphics
-	to generate a line segment between two specified endpoints*/
 
 static void	setup_dda(t_game *game, t_ray *ray)
 {
@@ -70,9 +56,6 @@ static void	setup_dda(t_game *game, t_ray *ray)
 			* ray->delta_dist_y;
 	}
 }
-
-/* DDA LOOP */
-
 static void	perform_dda(t_game *game, t_ray *ray)
 {
 	int	hit;
