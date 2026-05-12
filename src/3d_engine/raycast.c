@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 10:58:49 by halzamma          #+#    #+#             */
-/*   Updated: 2026/05/07 15:53:19 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/12 11:07:27 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	init_ray(t_game *game, int x, t_ray *ray)
-{
-	double	view_x;
-
-	view_x = 2.0 * x / (double)SCREEN_W - 1.0;
-	ray->dir_x = game->player.dir_x + game->player.plane_x * view_x;
-	ray->dir_y = game->player.dir_y + game->player.plane_y * view_x;
-	ray->map_x = (int)game->player.x;
-	ray->map_y = (int)game->player.y;
-	if (ray->dir_x == 0)
-		ray->delta_dist_x = 1e30;
-	else
-		ray->delta_dist_x = fabs(1.0 / ray->dir_x);
-	if (ray->dir_y == 0)
-		ray->delta_dist_y = 1e30;
-	else
-		ray->delta_dist_y = fabs(1.0 / ray->dir_y);
-}
 
 static void	setup_dda(t_game *game, t_ray *ray)
 {
@@ -56,6 +37,7 @@ static void	setup_dda(t_game *game, t_ray *ray)
 			* ray->delta_dist_y;
 	}
 }
+
 static void	perform_dda(t_game *game, t_ray *ray)
 {
 	int	hit;
@@ -76,71 +58,51 @@ static void	perform_dda(t_game *game, t_ray *ray)
 			ray->side = 1;
 		}
 		if (game->scene.map.grid[ray->map_y][ray->map_x] == '1'
-			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'D'
-			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'O')
+			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'D')
 			hit = 1;
 	}
 }
 
-static void	calc_wall_dist(t_ray *ray)
+static void	render_wall(t_game *game, t_ray *ray, int x)
 {
-	if (ray->side == 0)
-		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
-	else
-		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+	int	tex_index;
+
+	init_ray(game, x, ray);
+	setup_dda(game, ray);
+	perform_dda(game, ray);
+	calc_wall_dist(ray);
+	calc_wall_height(ray);
+	tex_index = select_texture(ray, game);
+	calc_tex_x(game, ray, tex_index);
+	draw_wall_column(game, ray, x, tex_index);
 }
 
-static void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx)
+static void	render_open_door(t_game *game, t_ray *ray, int x)
 {
-	double	wall_x;
-
-	if (ray->side == 0)
-		wall_x = game->player.y + ray->perp_wall_dist * ray->dir_y;
-	else
-		wall_x = game->player.x + ray->perp_wall_dist * ray->dir_x;
-	wall_x -= floor(wall_x);
-	ray->tex_x = (int)(wall_x * (double)game->textures[tex_idx].width);
-	if (ray->side == 0 && ray->dir_x > 0)
-		ray->tex_x = game->textures[tex_idx].width - ray->tex_x - 1;
-	if (ray->side == 1 && ray->dir_y < 0)
-		ray->tex_x = game->textures[tex_idx].width - ray->tex_x - 1;
-}
-
-int	get_texel_color(t_img *tex, int tex_x, int tex_y)
-{
-	char	*pixel;
-
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= tex->width)
-		tex_x = tex->width - 1;
-	if (tex_y < 0)
-		tex_y = 0;
-	if (tex_y >= tex->height)
-		tex_y = tex->height - 1;
-	pixel = tex->addr + (tex_y * tex->line_len + tex_x * (tex->bpp / 8));
-	return (*(int *)pixel);
+	init_ray(game, x, ray);
+	setup_dda(game, ray);
+	perform_dda_door(game, ray);
+	if (game->scene.map.grid[ray->map_y][ray->map_x] != 'O')
+		return ;
+	calc_wall_dist(ray);
+	calc_wall_height(ray);
+	calc_tex_x(game, ray, DOOR_OPEN);
+	open_door(game, ray, x, DOOR_OPEN);
 }
 
 void	render_frame(t_game *game)
 {
-	t_ray ray;
-	int tex_index;
-	int x;
+	t_ray	ray;
+	t_ray	door_ray;
+	int		x;
 
 	x = 0;
 	while (x < SCREEN_W)
 	{
-		init_ray(game, x, &ray);
-		setup_dda(game, &ray);
-		perform_dda(game, &ray);
-		calc_wall_dist(&ray);
-		calc_wall_height(&ray);
-		tex_index = select_texture(&ray, game);
-		calc_tex_x(game, &ray, tex_index);
-		draw_wall_column(game, &ray, x, tex_index);
+		render_wall(game, &ray, x);
+		render_open_door(game, &door_ray, x);
 		x++;
 	}
-	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img.img, 0,
-		0);
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win,
+		game->mlx.img.img, 0, 0);
 }

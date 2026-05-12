@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_graph.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 17:25:14 by halzamma          #+#    #+#             */
-/*   Updated: 2026/05/07 15:50:24 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/12 10:58:58 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ static void	mlx_hooks(t_game *game)
 	mlx_hook(game->mlx.win, 17, 0L, close_hook, game);
 }
 
+static void	load_textures(t_game *game)
+{
+	load_texture(game->mlx.mlx, &game->textures[NORTH],
+		game->scene.config.no_path);
+	load_texture(game->mlx.mlx, &game->textures[SOUTH],
+		game->scene.config.so_path);
+	load_texture(game->mlx.mlx, &game->textures[WEST],
+		game->scene.config.we_path);
+	load_texture(game->mlx.mlx, &game->textures[EAST],
+		game->scene.config.ea_path);
+	load_texture(game->mlx.mlx, &game->textures[DOOR],
+		game->scene.config.do_path);
+	load_texture(game->mlx.mlx, &game->textures[DOOR_OPEN],
+		game->scene.config.dop_path);
+}
+
 void	init_mlx(t_game *game)
 {
 	game->mlx.mlx = mlx_init();
@@ -53,25 +69,6 @@ void	init_mlx(t_game *game)
 			&game->mlx.img.bpp,
 			&game->mlx.img.line_len,
 			&game->mlx.img.endian);
-	load_texture(game->mlx.mlx, &game->textures[NORTH],
-		game->scene.config.no_path);
-	load_texture(game->mlx.mlx, &game->textures[SOUTH],
-		game->scene.config.so_path);
-	load_texture(game->mlx.mlx, &game->textures[WEST],
-		game->scene.config.we_path);
-	load_texture(game->mlx.mlx, &game->textures[EAST],
-		game->scene.config.ea_path);
-	load_texture(game->mlx.mlx, &game->textures[DOOR],
-		game->scene.config.do_path);
-	load_texture(game->mlx.mlx, &game->textures[DOOR_OPEN],
-		game->scene.config.dop_path);
+	load_textures(game);
 	mlx_hooks(game);
-}
-
-void	mlx_pixel_put_to_image(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
 }

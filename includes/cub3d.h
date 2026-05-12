@@ -201,8 +201,14 @@ void	map_validation(t_scene *scene);
 
 /* raycasting and rendering */
 void	calc_wall_height(t_ray *ray);
+void	init_draw(t_game *game, t_ray *ray, t_draw *d, int tex_idx);
 int		select_texture(t_ray *ray, t_game *game);
 void    draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx);
+void	perform_dda_door(t_game *game, t_ray *ray);
+void	init_ray(t_game *game, int x, t_ray *ray);
+void	calc_wall_dist(t_ray *ray);
+void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx);
+void	open_door(t_game *game, t_ray *ray, int x, int tex_idx);
 
 /* parser/parse_config.c - validation */
 void	validate_config(t_scene *scene);

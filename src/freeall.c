@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeall.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 15:36:21 by halzamma          #+#    #+#             */
-/*   Updated: 2026/05/07 15:39:36 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/12 09:57:29 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	free_scene(t_scene *scene)
 	free(scene->config.so_path);
 	free(scene->config.we_path);
 	free(scene->config.ea_path);
+	free(scene->config.do_path);
+	free(scene->config.dop_path);
 	free_grid(scene->map.grid, scene->map.height);
 }
 

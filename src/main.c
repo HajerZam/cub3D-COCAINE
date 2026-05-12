@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 15:48:05 by halzamma          #+#    #+#             */
-/*   Updated: 2026/05/07 15:40:03 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/12 10:05:27 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int	main(int ac, char **av)
 	init_player(&game);
 	mlx_loop_hook(game.mlx.mlx, game_loop, &game);
 	mlx_loop(game.mlx.mlx);
-	free_scene(&game.scene);
+	free_game(&game);
 	return (0);
 }
