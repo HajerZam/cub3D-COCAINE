@@ -4,13 +4,18 @@
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
-
 # define SCREEN_W	1280
 # define SCREEN_H	720
+# define TILE_SIZE	8
+# define MAP_OFFSET_X	10
+# define MAP_OFFSET_Y	10
+# define COLOR_WALL		0x444444
+# define COLOR_FLOOR		0xAAAAAA
+# define COLOR_PLAYER	0xFF0000
+# define COLOR_RAY		0xFFFF00
+# define MOVE_SPEED 0.05
+# define ROT_SPEED 0.03
 
-// macros
-# define SCREEN_W	1280
-# define SCREEN_H	720
 
 enum e_keys
 {
@@ -224,6 +229,9 @@ int		mouse_hook(int x, int y, t_game *game);
 int		close_hook(t_game *game);
 int		is_wall(t_game *game, double x, double y);
 void	trigger_interact(t_game *game);
+void	rotate_player(t_game *game);
+void	move_player(t_game *game);
+void	apply_rotation(t_game *game, double cos_a, double sin_a);
 
 /*2d engine*/
 void	draw_minimap(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 14:56:15 by halzamma          #+#    #+#             */
-/*   Updated: 2026/04/27 14:56:15 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/13 13:19:49 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	rotate_by_angle(t_player *p, double angle)
 
 int	mouse_hook(int x, int y, t_game *game)
 {
-	int			delta_x;
+	int	delta_x;
 
 	(void)y;
 	delta_x = x - SCREEN_W / 2;

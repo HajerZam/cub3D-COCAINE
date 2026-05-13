@@ -29,25 +29,18 @@ HEADERS     := -I$(INCLUDE_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 MLX_FLAGS   := -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
 
 SRC         := $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c))
-OBJ         := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
-SRC_TO_OBJ_MAP = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+OBJ         := $(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-all: $(OBJ_DIR) $(LIBFT) $(MLX) $(NAME)
+all: $(LIBFT) $(MLX) $(NAME)
 
-$(NAME): $(SRC_TO_OBJ_MAP) $(LIBFT) $(MLX)
+$(NAME): $(OBJ) $(LIBFT) $(MLX)
 	@echo "Linking $(NAME)..."
-	@$(CC) $(CFLAGS) $(SRC_TO_OBJ_MAP) -L$(LIBFT_DIR) -lft $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft $(MLX_FLAGS) -o $(NAME)
 
-$(OBJ_DIR):
-	@mkdir -p $@
-
-define MAKE_OBJ_RULE
-$(OBJ_DIR)/$(notdir $(1:.c=.o)): $(1) | $(OBJ_DIR)
-	@echo "Compiling $(1)..."
-	@$(CC) $(CFLAGS) $(HEADERS) -c $$< -o $$@
-endef
-
-$(foreach src, $(SRC), $(eval $(call MAKE_OBJ_RULE,$(src))))
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(LIBFT):
 	@echo "Building libft..."

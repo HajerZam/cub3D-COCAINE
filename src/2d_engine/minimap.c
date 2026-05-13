@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halzamma <halzamma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 15:40:46 by halzamma          #+#    #+#             */
-/*   Updated: 2026/05/07 15:49:56 by halzamma         ###   ########.fr       */
+/*   Updated: 2026/05/13 13:12:45 by halzamma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define TILE_SIZE	8
-#define MAP_OFFSET_X	10
-#define MAP_OFFSET_Y	10
-
-#define COLOR_WALL		0x444444
-#define COLOR_FLOOR		0xAAAAAA
-#define COLOR_PLAYER	0xFF0000
-#define COLOR_RAY		0xFFFF00
-
-void	put_pixel_safe(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || x >= 1280 || y < 0 || y >= 720)
-		return ;
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
-}
 
 static void	draw_tile(t_img *img, int col, int row, int color)
 {
@@ -76,13 +57,26 @@ static void	draw_map_grid(t_game *game)
 	}
 }
 
+static void	draw_dir_ray(t_game *game, int px, int py)
+{
+	double	dir_len;
+
+	dir_len = 0;
+	while (dir_len < TILE_SIZE)
+	{
+		put_pixel_safe(&game->mlx.img,
+			px + (int)(game->player.dir_x * dir_len),
+			py + (int)(game->player.dir_y * dir_len), COLOR_RAY);
+		dir_len += 0.5;
+	}
+}
+
 static void	draw_player_dot(t_game *game)
 {
-	int		px;
-	int		py;
-	int		i;
-	int		j;
-	double	dir_len;
+	int	px;
+	int	py;
+	int	i;
+	int	j;
 
 	px = MAP_OFFSET_X + (int)(game->player.x * TILE_SIZE);
 	py = MAP_OFFSET_Y + (int)(game->player.y * TILE_SIZE);
@@ -97,14 +91,7 @@ static void	draw_player_dot(t_game *game)
 		}
 		i++;
 	}
-	dir_len = 0;
-	while (dir_len < TILE_SIZE)
-	{
-		put_pixel_safe(&game->mlx.img,
-			px + (int)(game->player.dir_x * dir_len),
-			py + (int)(game->player.dir_y * dir_len), COLOR_RAY);
-		dir_len += 0.5;
-	}
+	draw_dir_ray(game, px, py);
 }
 
 void	draw_minimap(t_game *game)
