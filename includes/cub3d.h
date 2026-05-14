@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: halzamma <halzamma@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/07 15:54:25 by halzamma          #+#    #+#             */
+/*   Updated: 2026/05/14 19:21:24 by halzamma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -15,7 +27,6 @@
 # define COLOR_RAY		0xFFFF00
 # define MOVE_SPEED 0.05
 # define ROT_SPEED 0.03
-
 
 enum e_keys
 {
@@ -145,7 +156,7 @@ typedef struct s_game
 	t_player	player;
 	t_keys		keys;
 	t_mlx		mlx;
-	t_img		textures[6]; // 4 walls + door + door_open
+	t_img		textures[6];
 }	t_game;
 
 // raycasting structures
@@ -168,7 +179,7 @@ typedef struct s_ray
 	int		draw_start;
 	int		draw_end;
 	int		tex_x;
-} t_ray;
+}	t_ray;
 
 typedef struct s_draw
 {
@@ -180,8 +191,6 @@ typedef struct s_draw
 	double	tex_step;
 	double	tex_pos;
 }	t_draw;
-
-
 
 // freeall.c
 void	free_scene(t_scene *scene);
@@ -200,6 +209,8 @@ void	parse_config(char *file_path, t_scene *scene);
 // parser/parse_config.c
 void	parse_identifier(char *line, t_scene *scene);
 void	validate_config(t_scene *scene);
+void	check_flood(t_scene *scene);
+void	parse_color(char *str, t_color *color);
 
 // parser/map_validation.c
 void	map_validation(t_scene *scene);
@@ -208,7 +219,7 @@ void	map_validation(t_scene *scene);
 void	calc_wall_height(t_ray *ray);
 void	init_draw(t_game *game, t_ray *ray, t_draw *d, int tex_idx);
 int		select_texture(t_ray *ray, t_game *game);
-void    draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx);
+void	draw_wall_column(t_game *game, t_ray *ray, int x, int tex_idx);
 void	perform_dda_door(t_game *game, t_ray *ray);
 void	init_ray(t_game *game, int x, t_ray *ray);
 void	calc_wall_dist(t_ray *ray);
@@ -216,8 +227,7 @@ void	calc_tex_x(t_game *game, t_ray *ray, int tex_idx);
 void	open_door(t_game *game, t_ray *ray, int x, int tex_idx);
 
 /* parser/parse_config.c - validation */
-void	validate_config(t_scene *scene);
-int     get_texel_color(t_img *tex, int tex_x, int tex_y);
+int		get_texel_color(t_img *tex, int tex_x, int tex_y);
 void	render_frame(t_game *game);
 
 /* player*/
