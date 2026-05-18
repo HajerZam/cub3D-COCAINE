@@ -31,9 +31,9 @@ void	perform_dda_door(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->scene.map.grid[ray->map_y][ray->map_x] == '1'
-			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'D'
-			|| game->scene.map.grid[ray->map_y][ray->map_x] == 'O')
+		if (game->scene.map.grid[ray->map_y][ray->map_x] == '1')
+			hit = 1;
+		else if (game->scene.map.grid[ray->map_y][ray->map_x] == 'O')
 			hit = 1;
 	}
 }
@@ -68,8 +68,8 @@ int	select_texture(t_ray *ray, t_game *game)
 	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
-			return (WEST);
-		return (EAST);
+			return (EAST);
+		return (WEST);
 	}
 	if (ray->step_y > 0)
 		return (NORTH);
